@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Ti 💘</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    font-family: Arial, sans-serif;
+    color:white;
+    text-align:center;
+    background:black;
+}
+
+/* 🌌 ESTRELLAS */
+canvas{
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+/* 💌 CARTA */
+.card{
+    position:relative;
+    z-index:2;
+    background:rgba(0,0,0,0.6);
+    padding:40px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    transform:scale(0);
+    animation: abrirCarta 1.5s forwards;
+}
+
+@keyframes abrirCarta{
+    to{transform:scale(1);}
+}
+
+/* 💖 BOTONES */
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    background:white;
+    color:#ff4e8b;
+    font-weight:bold;
+    cursor:pointer;
+    margin:10px;
+    font-size:16px;
+}
+
+#noBtn{
+    position:absolute;
+}
+
+/* 💍 ANILLO */
+.ring{
+    font-size:60px;
+    animation:spin 2s linear infinite;
+}
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+/* 💖 CORAZONES */
+.heart{
+    position:absolute;
+    animation:up 5s linear forwards;
+}
+@keyframes up{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);opacity:0;}
+}
+
+/* 💌 NOMBRE */
+.nombre{
+    font-size:26px;
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{opacity:0.5;}
+    to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="card">
+    <h1>💘 ¿Quieres ser mi novia? 💘</h1>
+    <div class="nombre">❤️ PARA TI ❤️</div>
+
+    <p>Prometo hacerte feliz todos los días 💖</p>
+
+    <div class="ring">💍</div>
+
+    <br>
+
+    <button onclick="aceptar()">Sí 💖</button>
+    <button id="noBtn">No 😢</button>
+</div>
+
+<audio id="music" loop>
+<iframe
+  id="music"
+  width="0"
+  height="0"
+  src="https://www.youtube.com/embed/eIubx5NtJeU?autoplay=1&loop=1&playlist=eIubx5NtJeU"
+  frameborder="0"
+  allow="autoplay"
+></iframe>
+</audio>
+
+<script>
+/* 🌌 ESTRELLAS */
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = Array(200).fill().map(()=>({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*2
+}));
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="white";
+    stars.forEach(s=>{
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fill();
+    });
+    move();
+}
+function move(){
+    stars.forEach(s=>{
+        s.y += 0.5;
+        if(s.y>canvas.height) s.y=0;
+    });
+}
+setInterval(draw,30);
+
+/* 😈 BOTÓN NO INTELIGENTE */
+const noBtn=document.getElementById("noBtn");
+const siBtn=document.querySelector("button");
+
+let count=0;
+let scale=1;
+
+noBtn.addEventListener("mouseover",moveBtn);
+noBtn.addEventListener("click",()=>aceptar());
+
+function moveBtn(){
+    if(navigator.vibrate) navigator.vibrate(100);
+
+    if(count<6){
+        noBtn.style.left=Math.random()*window.innerWidth+"px";
+        noBtn.style.top=Math.random()*window.innerHeight+"px";
+
+        scale-=0.1;
+        noBtn.style.transform="scale("+scale+")";
+
+        alert("¿Estás segura? 😏");
+        count++;
+    }else{
+        const r=siBtn.getBoundingClientRect();
+        noBtn.style.left=r.left+"px";
+        noBtn.style.top=r.top+"px";
+    }
+}
+
+/* 💖 ACEPTAR */
+function aceptar(){
+    document.getElementById("music").play();
+    window.location.href="felicidades.html";
+}
+
+/* 💖 CORAZONES */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(20+Math.random()*20)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+},300);
+</script>
+
+</body>
+</html>
