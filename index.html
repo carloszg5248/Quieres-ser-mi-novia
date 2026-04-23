@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti 💘</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            text-align: center;
+            background: radial-gradient(circle, #1a0a1a, #000000);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 🌌 ESTRELLAS */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* 💌 CARTA */
+        .card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            transform: scale(0);
+            animation: abrirCarta 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            max-width: 80%;
+        }
+
+        @keyframes abrirCarta {
+            to { transform: scale(1); }
+        }
+
+        h1 { font-size: 2rem; margin-bottom: 10px; }
+
+        /* 💖 BOTONES */
+        .buttons {
+            margin-top: 30px;
+            height: 50px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+
+        #siBtn {
+            background: #ff4e8b;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 78, 139, 0.4);
+        }
+
+        #siBtn:hover { transform: scale(1.1); }
+
+        #noBtn {
+            background: white;
+            color: #ff4e8b;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        /* 💍 ANILLO */
+        .ring {
+            font-size: 60px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(10deg); }
+        }
+
+        /* 💖 CORAZONES */
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: up 4s linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes up {
+            from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .nombre {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffb3d9;
+            text-shadow: 0 0 10px rgba(255, 179, 217, 0.5);
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="stars"></canvas>
+
+    <div class="card">
+        <h1>💘 ¿Quieres ser mi novia? 💘</h1>
+        <div class="nombre">❤️ ROSA ❤️</div>
+        <p>Prometo hacerte feliz todos los días 💖</p>
+        <div class="ring">💍</div>
+        
+        <div class="buttons">
+            <button id="siBtn" onclick="aceptar()">¡Sí, acepto! 💖</button>
+            <button id="noBtn" onmouseover="moveBtn()">No 😢</button>
+        </div>
+    </div>
+
+    <div id="musicContainer" style="display:none
